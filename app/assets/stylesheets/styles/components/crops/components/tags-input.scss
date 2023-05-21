@@ -1,0 +1,165 @@
+.keywords {
+  appearance: none;
+  border-radius: 0;
+  border: 0 solid $form-gray;
+  border-bottom: .5px solid darken($gray-bg, 10%);
+  border-right: .5px solid darken($gray-bg, 10%);
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, .2);
+  color: $background-color;
+  display: block;
+  margin: 0 0 1rem;
+  height: 2.3125rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: box-shadow .45s, border-color .45s ease-in-out;
+
+  .host {
+    position: relative;
+    height: 100%;
+    display: block;
+    margin: 0 0 1rem;
+    height: 2.3125rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: box-shadow .45s, border-color .45s ease-in-out;
+
+    &:active {
+      outline: none;
+    }
+  }
+
+  .autocomplete {
+    border-radius: 0;
+    background-color: darken($gray-bg, 1%);
+  }
+
+  &.ng-invalid {
+
+    .tags {
+      border-color: $of-red;
+      box-shadow: inset 0 1px 1px $background-color, 0 0 6px $of-red;
+    }
+  }
+}
+
+.suggestion-item {
+  &.selected {
+    color: darken($off-black, 10%);
+    background-color: $gray-bg;
+
+    em {
+      color: darken($off-black, 10%);
+      background-color: $gray-bg;
+    }
+  }
+
+  em {
+    color: $off-black;
+    background-color: $white;
+  }
+}
+
+.keywords > .tags {
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  box-shadow: $input-box-shadow;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  padding: 4px;
+
+  .tag-list {
+    padding: .07em;
+  }
+
+  .input {
+    margin: 1px;
+    font: inherit;
+    font-size: .88rem;
+    border-radius: 0;
+  }
+
+  .remove-button {
+    margin: 0;
+    margin-left: 5px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 16px;
+    color: $dark-gray;
+
+    &:active {
+      color: $of-red;
+    }
+  }
+}
+
+.keywords[disabled] > .tags {
+  background-color: lighten($light-gray, 10%);
+
+  .tag-item {
+    background: $of-blue;
+    opacity: .65;
+  }
+
+  .input {
+    background-color: lighten($light-gray, 10%);
+  }
+}
+
+.input-group > .keywords {
+  padding: 0;
+  display: table-cell;
+
+  &:not(:first-child) .tags {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:not(:last-child) .tags {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:first-child .tags {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:last-child .tags {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.has-feedback .keywords .tags {
+  padding-right: 30;
+}
+
+.has-success .keywords .tags {
+  border-color: $form-gray;
+
+  &.focused {
+    border-color: $form-gray;
+    box-shadow: inset 0 1px 1px $background-color, 0 0 6px $of-green;
+  }
+}
+
+.has-error .keywords .tags {
+  border-color: $of-red;
+
+  &.focused {
+    border-color: $of-red;
+    box-shadow: inset 0 1px 1px $background-color, 0 0 6px $of-red;
+  }
+}
+
+.has-warning .keywords .tags {
+  border-color: $primary-color;
+
+  &.focused {
+    border-color: $of-yellow;
+    box-shadow: inset 0 1px 1px $background-color, 0 0 6px $of-orange;
+  }
+}

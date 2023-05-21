@@ -1,0 +1,111 @@
+<%= content_for(:description) do %><%= truncate(@crop.description, length: 80, separator: ' ') %><% end %>
+<%= content_for(:social_image) do %><%= image_url(@crop.main_image_path) %><% end %>
+<%= content_for(:keywords) do %><% if @crop.common_names %><%= @crop.common_names.join(', ') %><% end %>, <%= @crop.name %>, <%= @crop.binomial_name %><% end %>
+<%= content_for(:title) do %> - <%= @crop.name %><% end %>
+
+<div class="crop-page row wide-row"
+     data-equalizer
+     ng-controller="showCropCtrl"
+     ng-cloak>
+  <div data-equalizer-watch class="crop-info-container columns medium-6 small-12">
+    <div class="crop-hero" style="background-image: url('<%= @crop.main_image_path.sub(/(https|http):/, '') %>')">
+      <h1 class="crop-name text-center"><%= @crop.name %></h1>
+      <% if current_user %>
+        <%= link_to(icon('fa', 'edit') + " " + t('crops.edit_crop'), {action: 'edit'}, class: 'edit-link button secondary tiny') %>
+          <div add-to-gardens
+              crop-object="crop"
+              object-type="'crop'"
+              user="currentUser">
+            </div>
+      <% end %>
+
+    </div>
+    <table class="crop">
+        <tbody>
+        <tr>
+          <td colspan="2">
+          <a of-lightbox-modal ng-repeat="picture in crop.pictures"
+            thumbnail-url="{{picture.small_url}}" display-url="{{picture.image_url}}">
+          </a>
+          <span ng-show="processingPictures" class="still-uploading-crop-images">
+            <i class="fa fa-spin fa-spinner"></i>
+            processing images...
+          </span>
+          </td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.tags') %></td>
+          <td><%= @crop.tags_array.join(', ')%></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.binomial_name') %></td>
+          <td><%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.binomial_name} %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.taxon') %></td>
+          <td><%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.taxon} %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.description') %></td>
+          <td><%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.description} %></td>
+        </tr>
+        <tr>
+          <td>
+            <%= I18n.t('crops.companions') %>
+          </td>
+          <td>
+            <% @crop.companions.all.each do |comp| %>
+              <%= link_to comp do %>
+                <div class="crop-icon-wrapper">
+                  <%= image_tag crop_path(comp, format: :svg), alt: comp.name %>
+                </div>
+                <%= comp.name %>
+              <% end %>
+            <% end  %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.sun_requirements') %></td>
+          <td><%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.sun_requirements} %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.growing_degree_days') %></td>
+          <td><%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.growing_degree_days, unit_type: 'time'} %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.sowing_method') %></td>
+          <td>
+          <%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.sowing_method} %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.spread') %></td>
+          <td>
+            <%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.spread, unit_type: 'distance'} %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.row_spacing') %></td>
+          <td>
+            <%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.row_spacing, unit_type: 'distance'} %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('crops.height') %></td>
+          <td>
+            <%= render partial: '/crops/exists_or_edit', locals: {obj: @crop.height, unit_type: 'distance'} %>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+  <div data-equalizer-watch class="guide-results-container columns medium-6 small-12">
+    <h2 class="text-center"><%= @guides.blank? ? "There are no guides for this crop yet" : "Guides for this crop" %></h2>
+    <%= link_to new_guide_path(:crop_id => @crop.id), :class => "add-guide" do %>
+      <p><i class="fa fa-plus symbol-add"></i>Make your own!</p>
+    <%end%>
+    <%= render partial: '/guides/guide_results_list', object: @guides %>
+  </div>
+</div>
+
+<% content_for(:end_js) do %>
+<%= javascript_tag "var USER_ID = '#{current_user ? current_user.id : nil}';" %>
+<% end %>

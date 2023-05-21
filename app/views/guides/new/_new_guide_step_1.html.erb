@@ -1,0 +1,39 @@
+<section name="step-1"
+  class="step"
+  ng-show="step === 1"
+  ng-if="!$scope.loadingEverything"
+  ng-class="{'from-right': step < 1, 'from-left': step > 1}">
+  <form accept-charset="UTF-8"
+    class="getting-started"
+    id="new-guide-step-1"
+    method="post"
+    >
+    <div class="instructions text-center">
+      <h1>
+        <%= t('.lets_get_started') %>
+      </h1>
+      <legend>
+        <%= t('.guide_creation_tip') %>
+      </legend>
+    </div>
+    <div class="row">
+      <div guides-choose-crop
+        guide="newGuide"
+        texts="{ 'commonOrScientific': '<%= t('.common_or_scientific') %>',
+        'whichCrop': '<%= t('.which_crop') %>',
+        'cropSearches': '<%= t('crop_searches.show.loading_crops') %>',
+        'placeholder': '<%= t('home.placeholder') %>'}">
+      </div>
+    </div>
+    <div class="button-wrapper row">
+      <div class="columns small-12">
+        {{ form.newGuideStep1 }}
+        <div stage-buttons
+          abled-bool="newGuide.crop"
+          abled-text="<%= t('.next_life_stages') %>"
+          disabled-text="<%= t('.choose_a_crop_to_continue') %>">
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

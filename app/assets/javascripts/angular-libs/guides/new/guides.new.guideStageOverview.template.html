@@ -1,0 +1,81 @@
+<div class="row stage-overview">
+  <div class="columns small-12">
+    <label class="left">
+      Give an overview of the stage:
+    </label>
+  </div>
+  <div class="columns small-12">
+    <textarea ng-model="stage.overview">
+    </textarea>
+  </div>
+</div>
+
+<div class="row image">
+  <div class="columns small-12">
+    <label class="left"
+        for="stage_image_upload">{{ texts.chooseStagePhoto }}<br/>
+      <small>{{ texts.onlyUploadWhatYouOwn }}</small>
+    </label>
+  </div>
+  <of-images-upload
+    class="columns small-12"
+    item="stage"
+    images-key="'pictures'"
+    item-type="'stage'">
+  </of-images-upload>
+</div>
+</div>
+<div class="row environment">
+  <div class="columns small-12">
+    <label class="left"
+      for="where_should_stage_happen">
+        {{ texts.whereHappen }}
+        <br/>
+        <small>{{ texts.chooseMoreThanOne }}</small>
+    </label>
+  </div>
+  <div class="columns small-12">
+    <div multi-row-select
+       class="multi-choice"
+       options-array="stage.environment"
+       multi-select-overflow-count="3"
+       multi-select-type="checkbox"
+       multi-select-id="environment">
+    </div>
+  </div>
+</div>
+<div class="row soil">
+  <div class="columns small-12">
+    <label class="left"
+      for="what_type_of_soil">
+        {{ texts.whatTypeOfSoil }}
+        <br/>
+        <small>{{ texts.notSureSoil }}</small>
+    </label>
+  </div>
+  <div class="columns small-12">
+    <div multi-row-select
+       class="multi-choice"
+       options-array="stage.soil"
+       multi-select-type="checkbox"
+       multi-select-id="soil">
+    </div>
+  </div>
+</div>
+<div class="row light">
+  <div class="columns small-12">
+    <label class="left"
+      for="how_much_light">
+       {{ texts.howMuchLight }}
+        <br/>
+    </label>
+  </div>
+  <div class="columns small-12">
+    <div multi-row-select
+       class="multi-choice"
+       options-array="stage.light"
+       multi-select-type="checkbox"
+       multi-select-id="light">
+    </div>
+  </div>
+</div>

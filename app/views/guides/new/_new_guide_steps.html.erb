@@ -1,0 +1,54 @@
+<% edit = false if !edit #define edit so that an undefined variable error is not thrown%>
+
+<div class="multi-bar-header">
+  <div class="bar-header">
+    <h1 class="title">
+      <% if edit %>
+        <%= t('.edit_a_growing_guide') %>
+      <% else %>
+        <%= t('.create_a_growing_guide') %>
+      <% end %>
+    </h1>
+  </div>
+  <div class="bar-header guide-creation-nav">
+    <div class="container">
+      <div class="row">
+        <ul class="small-12 columns">
+          <li>
+            <a ng-class="{ 'active' : step === 1, 'disabled' : !newGuide.crop, 'check' : newGuide.crop }"
+            ng-click="switchToStep(1)">
+              <%= t('.the_basics') %>
+            </a>
+          </li>
+          <li>
+            <a ng-class="{ 'active' : step === 2, 'disabled' : !newGuide.crop || !newGuide.selectedStagesCount > 0, 'check' : newGuide.selectedStagesCount > 0 }"
+            ng-click="switchToStep(2)">
+              <%= t('.life_stages') %>
+            </a>
+          </li>
+          <li>
+            <a ng-class="{ 'active' : step === 3, 'disabled' : !newGuide.crop || !newGuide.selectedStagesCount > 0, 'check' : step === 4 || newGuide.exists }"
+            ng-click="switchToStep(3)">
+              <%= t('.stage_details') %>
+            </a>
+          </li>
+          <li>
+            <a ng-class="{ 'active' : step === 4, 'disabled' : !newGuide.crop || !newGuide.selectedStagesCount > 0, 'check' : newGuide.name }"
+            ng-click="switchToStep(4)">
+              <%= t('.final_touches') %>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="bar-header life-stage-nav stage-details" ng-show="step === 3"
+    ng-class="{'from-right': step < 3, 'from-left': step > 3}">
+    <div class="container">
+      <div class="row">
+        <%= render 'guides/new/stage_details/chosen_stages' %>
+      </div>
+    </div>
+  </section>
+</div>

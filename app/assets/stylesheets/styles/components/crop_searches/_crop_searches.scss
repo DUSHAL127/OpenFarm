@@ -1,0 +1,26 @@
+.crop-search-results {
+  height: 100%;
+
+  h2 {
+    margin: 1em 0;
+  }
+
+  .crop-results-container {}
+
+  .guide-results-container {
+    background-color: $openfarm-blue-grey;
+    /* replace the typical 15px left/right padding
+    to account for the compatibility score bar */
+    padding: 0 15px 30px 15px;
+  }
+}
+
+div.crop-icon-wrapper img {
+  width: 26px;
+  height: 26px;
+}
+
+/*@import "crop_searches/_crop_results.css.scss";
+@import "crop_searches/_crop_result.css.scss";
+@import "crop_searches/_guide_results.css.scss";
+@import "crop_searches/_guide_result.css.scss";*/

@@ -1,0 +1,53 @@
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <% if resource.errors.any? %>
+    <div class="alert-box alert radius" data-alert="">
+      <ul>
+      <% resource.errors.full_messages.each do |full_message| %>
+        <li><%= full_message %></li>
+      <% end %>
+      </ul>
+      <a class="close" href="#">×</a>
+    </div>
+  <% end %>
+
+  <%= f.label :display_name, I18n.t('users.display_name') %>
+  <%= f.text_field :display_name %>
+
+  <%= f.label :email, I18n.t('users.email_address') %>
+  <%= f.email_field :email %>
+  <small id="passwordhelp"><%= t('users.will_send_email') %></small>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <% if @user.new_record? %>
+    <%= f.label :password, I18n.t('users.password') %>
+
+    <%= f.password_field :password, autocomplete: "off", ariaDescribedby: "passwordhelp" %>
+    <small id="passwordhelp"><%= t('users.at_least_8_characters') %></small>
+
+    <%= f.hidden_field :agree, value: true %><%= f.label :agree, t('users.tos_privacy_html',
+        tos_url: page_path('tos'),
+        privacy_url: page_path('privacy'),
+        coc_url: page_path('code_of_conduct') ) %>
+  <% else %>
+    <%= f.label :current_password, I18n.t('users.current_password') %>
+    <%= f.password_field :current_password, autocomplete: "off" %>
+
+    <%= f.label :password, I18n.t('users.new_password') + I18n.t('users.password_blank_ok') %>
+    <%= f.password_field :password, autocomplete: "off" %>
+
+    <%= f.check_box :is_private %><%= f.label :is_private, I18n.t('users.is_private') %>
+
+    <br/>
+  <% end %>
+
+  <% if @user.new_record? %>
+    <div class="center">
+      <%= f.submit I18n.t('users.create_account'), class: 'button submit sign-up' %>
+    </div>
+  <% else %>
+    <%= f.submit I18n.t('users.update_account'), class: 'button submit' %>
+  <% end %>
+<% end %>

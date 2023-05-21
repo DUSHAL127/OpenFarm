@@ -1,0 +1,12 @@
+<div class="row actions"
+  ng-init="stage.activeAction = stage.stage_action_options[0]">
+  <div class="columns large-9 medium-8 small-12">
+    <div
+      action-details
+      ng-repeat="action in stage.stage_action_options"
+      ng-show="action.selected && stage.activeAction"
+      action="action"
+      texts="texts">
+    </div>
+  </div>
+</div>

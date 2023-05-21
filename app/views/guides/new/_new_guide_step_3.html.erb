@@ -1,0 +1,40 @@
+<section name="step-3"
+  class="step stage-details"
+  ng-show="step === 3"
+  ng-class="{'from-right': step < 3, 'from-left': step > 3}">
+
+  <div ng-show="newGuide.selectedStagesCount === 0">
+    <%= t('.select_some_stages') %>
+  </div>
+
+  <div ng-show="newGuide.selectedStagesCount > 0">
+
+    <!-- TODO: Fix before deploy -->
+    <form name="sacrificial-form" style="background:red">
+      <!-- This clearly shouldn't be necessary but something on the page is consuming the first form element -->
+    </form>
+    <!--  -->
+    <!-- There has to be a better way to send all of these internationalizations to Angular JS -->
+
+    <div class="text-center"
+    ng-hide="seenStagesIntro">
+    <h2>Filling out Stage details</h2>
+    <p>This is where you can tell everyone how you like to care for your Crop during each Life Stage. Start with the <strong>Stage Overview</strong>, and then add Actions such as <em>Prune</em>, <em>Water</em>, or <em>Add Fertilizer</em>.</p>
+
+    <a class="button" ng-click="seenStagesIntro = true">
+      Sounds good!
+    </a>
+    <a class="button" ng-click="switchToStep(4)">
+      Skip this for now
+    </a><br/>
+    <small>Clicking that button will make this intro text disappear</small>
+  </div>
+
+    <div guides-stages
+      guide="newGuide"
+      options="options"
+      texts="translations"
+      >
+    </div>
+  </div>
+</section>

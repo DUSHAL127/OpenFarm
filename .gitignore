@@ -1,0 +1,19 @@
+.DS_Store
+.vagrant/*
+*.swp
+/.bundle
+/config/app_environment_variables.rb
+/coverage/*
+/db
+/external-data
+/log/*.log
+/public/system
+/public/temp-uploads
+/public/assets
+/tmp
+/vendor/bundler
+coverage/
+coverage/*
+# Notes n such:
+*scratchpad*
+public/assets

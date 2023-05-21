@@ -1,0 +1,239 @@
+.show-guide {
+
+  background-color: #f6f6f6;
+
+  .draft-banner {
+    color: $white;
+    background-color: $of-green2;
+    padding: 2rem 0 1.5rem;
+    text-align: center;
+
+    h2 {
+      color: $white;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-top: .5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .guide-name input {
+    font-size: 2rem;
+  }
+
+  .button.favorite .fa-star {
+    color: $of-yellow;
+  }
+
+  .compatibility-circle-container {
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 50px;
+  }
+
+  .basic-needs {
+    padding: 0;
+
+    table {
+      border: none;
+      height: 100%;
+      margin: 0;
+      width: 100%;
+
+      tr {
+
+        &.low {
+          background: $compatibility-low-color-bg;
+        }
+
+        &.medium {
+          background: $compatibility-medium-color-bg;
+        }
+
+        &.high {
+          background: $compatibility-high-color-bg;
+        }
+
+        td {
+          padding: 16px;
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .basic-need-name {
+        span {
+          font-weight: 600;
+          padding-left: 10px;
+        }
+      }
+
+      .icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+textarea {
+  height: 10rem;
+  font-size: 1rem;
+  padding: 1rem;
+  line-height: 1.5rem;
+}
+
+/*
+
+  Markdown corrections
+
+*/
+
+.markdown-help-text {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
+
+.markdown {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  h4, h5, h6 {
+    font-size: 0.8rem;
+  }
+}
+
+.stages,
+.actions {
+  .images {
+    margin-top: 1rem;
+    display: inline-block;
+  }
+}
+
+.action-content {
+  .empty-details {
+    color: $light-gray;
+  }
+}
+
+.tabs.stages .add-stage a {
+  font-size: 14px;
+  font-family: $header-font-family;
+}
+
+.stage {
+  .stage-default-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+    display: block;
+  }
+}
+
+.management-actions {
+  padding: .75rem;
+  display: block;
+  height: 4rem;
+  width: 100%;
+  background-color: $light-gray;
+}
+
+// TODO: this needs to be cleaned up, have no idea what effect this has:
+
+.stages {
+  .action-content {
+    border-bottom: #cdcdcd 2px solid;
+    margin-top: 1rem;
+  }
+
+  .action-content:last-child {
+    border-bottom: none;
+  }
+
+  .image img {
+    background-position: center;
+    background-size: cover;
+    height: 170px;
+    width: 100%;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .tabs {
+    background-color: #efefef;
+  }
+
+  .tabs-content {
+    background-color: #f6f6f6;
+  }
+
+  .tabs dd > a {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .tabs > dd.active > a,
+  .tabs > dd.active > a > tab-heading > h3 {
+    background-color: #4a4a4a;
+    color: #ffffff;
+  }
+
+  // Allow horizontal scrolling of Life Stage tabs
+  dl.tabs {
+    overflow: auto;
+    white-space: nowrap;
+  }
+
+  .tabs dd {
+    display: inline-block;
+    float: none;
+  }
+
+  .tabs.fixed {
+    box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+  }
+
+  // Action labels in completed guides look different
+  .actions li {
+    color: #333333;
+    border-color: #333333;
+
+    &.selected {
+      color: white;
+      background: $of-green;
+      border-color: $of-green;
+    }
+  }
+
+  // Editing Stage Information
+
+  .editing-stage-environment {
+    margin-bottom: 2rem;
+
+    > label {
+      margin-top: 1rem;
+    }
+
+    :first-child {
+      margin-top: 0;
+    }
+  }
+}

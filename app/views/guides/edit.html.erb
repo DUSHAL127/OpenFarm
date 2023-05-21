@@ -1,0 +1,29 @@
+<% content_for(:start_js) do %>
+  <%= javascript_include_tag '//maps.google.com/maps/api/js?key=' + ENV['GOOGLE_MAPS_API_KEY'] %>
+<% end %>
+
+<% content_for(:banner) do %>
+<% end %>
+
+<div ng-controller="newGuideCtrl"
+     class="guides new-guide" ng-cloak>
+
+  <%= render 'guides/new/new_guide_steps', edit: true %>
+
+  <div class="large-8 medium-11 small-12 columns ng-cloak small-centered">
+
+    <div alerts ng-model="alerts"></div>
+
+  <%= render 'guides/new/new_guide_step_1' %>
+
+  <%= render 'guides/new/new_guide_step_2' %>
+
+  <%= render 'guides/new/new_guide_step_3' %>
+
+  <%= render 'guides/new/new_guide_step_4' %>
+
+  </div>
+</div>
+<% content_for(:end_js) do %>
+<%= javascript_tag "var USER_ID = '#{current_user ? current_user.id : nil}';" %>
+<% end %>

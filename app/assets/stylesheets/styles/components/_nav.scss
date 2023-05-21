@@ -1,0 +1,104 @@
+.top-bar {
+
+  height: 71px;
+  z-index: 9999;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+
+  .logo {
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+  }
+
+  input[type='submit']{
+    padding: 0;
+    line-height: 2.125;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  .header-search{
+    max-width: 400px;
+    width: 47%;
+    margin-top: 17.5px;
+  }
+
+  @media #{$small-only}{
+    input {
+      height: 2.5rem;
+    }
+    // This is a bit hacky.
+    .header-search{
+      width: 100%;
+    }
+  }
+
+  .search {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .top-bar-section {
+    .show-for-medium-up {
+      margin-right: 1rem;
+    }
+  }
+
+  // nudge the right menu down and over
+  ul.right {
+    margin-top: 13px;
+  }
+
+  // Special home nav style
+  // Confused by the backwards ampersand?
+  // http://thesassway.com/intermediate/referencing-parent-selectors-using-ampersand
+  .home-nav & {
+    position: absolute;
+    z-index: 11;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color: transparent !important;
+    box-shadow: none;
+
+    li {
+      background: transparent !important;
+
+      &.divider {
+        display: none;
+      }
+    }
+
+    .gray-to-black-link {
+      background: $translucent-gray !important;
+      font-size: .8em;
+      color: $white;
+      font-weight: 800;
+
+      // Special case
+      &#logout {
+        padding-right: 15px;
+      }
+
+      &:hover {
+        background-color: $translucent-black !important;
+      }
+    }
+
+    // &.toggle-topbar.menu-icon a {
+    //  padding: 0 15px;
+    // }
+  }
+
+}
+
+.logo-link {
+  background: transparent;
+
+  &:hover {
+    background-color: transparent;
+  }
+}

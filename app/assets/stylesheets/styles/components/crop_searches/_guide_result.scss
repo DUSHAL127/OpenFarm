@@ -1,0 +1,89 @@
+.search-result-guide {
+  display: table;
+  width: 100%;
+  min-height: 40px;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  background-color: white;
+  color: rgba(85,94,106,0.8);
+  margin: 0 0 30px 0;
+  padding: 26px;
+  position: relative;
+  @include border-radius(4px);
+
+  $compatibility-bar-height: 4px;
+  $compatibility-bar-default-color: #e5eef1;
+  @include box-shadow(0 -$compatibility-bar-height 0 $compatibility-bar-default-color);
+  @include single-transition(all, 0.2s, ease-out);
+  /* account for compatibility color bar, results in uncentered li! */
+  left: $compatibility-bar-height;
+
+  @mixin compatibility-color($selector, $color) {
+    &.#{$selector} {
+      @include box-shadow(0 -$compatibility-bar-height 0 $color);
+
+      // maintain our box-shadow color when we add the drop shadow
+      &:hover {
+        @include box-shadow(0 -$compatibility-bar-height 0 $color, 0 4px 10px rgba(0,0,0,0.2));
+      }    }
+  }
+
+  @include compatibility-color('compatibility-low', $compatibility-low-color);
+  @include compatibility-color('compatibility-medium', $compatibility-medium-color);
+  @include compatibility-color('compatibility-high', $compatibility-high-color);
+
+  &:hover {
+    background-color: #F7F7F7;
+    @include transform(translateY(-2px));
+  }
+
+  &:active {
+    background-color: #DDDDDD;
+  }
+
+  .guide-info {
+    display: table-cell;
+    width: 100%;
+  }
+
+  .compatibility-circle-container {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .compatibility-circle {
+    display: block;
+    margin-left: 12px;
+  }
+
+  .guide-name-and-author {
+    display: block;
+    margin: 0;
+
+    .guide-name {
+      display: inline-block;
+      margin: 0;
+      font-size: 1.25em;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .guide-author {
+      display: inline-block;
+      margin: 0;
+      color: #A9A9A9;
+      font-size: 0.9em;
+      margin-left: 6px;
+    }
+
+    .guide-description {
+      display: block;
+      min-height: 1em;
+
+      p {
+        margin: 0;
+        color: #666;
+      }
+    }
+  }
+}

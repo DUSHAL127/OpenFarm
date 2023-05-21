@@ -1,0 +1,135 @@
+/**
+ * A class that covers all the s3 upload buttons.
+ */
+
+.pictures {
+  margin-bottom: 1rem;
+}
+
+.dragover {
+  border: 4px dotted $of-green;
+}
+
+.deleted {
+  opacity: .4;
+  background-color: $gray-bg;
+}
+
+.thumbnails {
+  margin: 0 .5rem .5rem 0;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: .2s opacity, .2s background-color;
+
+  img {
+    width: 100px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+  }
+
+  small {
+    color: lighten($of-red, 10%);
+  }
+
+  small:hover {
+    color: $of-red;
+  }
+}
+
+.s3-upload-input{
+  .click-to-upload-image{
+    @include add-new-button();
+    @include box-shadow(none);
+    @include font-awesome-mixin();
+
+    cursor: pointer;
+    color: $openfarm-green-muted;
+    width: 100px;
+    height: 100px;
+    border-radius: 1em;
+    display: inline-block;
+    margin-bottom: 2rem;
+    position: relative;
+    vertical-align: top;
+
+    &:hover {
+      color: darken($of-green, 10%);
+    }
+
+    &:before {
+      content: "\f06c";
+      font-size: 4rem;
+      position: absolute;
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .wrapper {
+      height: 100%;
+    }
+
+    img.no-image {
+      transform: translate(-50%, -50%);
+      position: relative;
+      top: 50%;
+      left: 50%;
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      position: relative;
+    }
+
+    .progress {
+      width: 100%;
+      bottom: -3rem;
+      position: absolute;
+    }
+  }
+
+  &.dragging .click-to-upload-image {
+    color: darken($of-green, 10%);
+    border-color: $openfarm-green-muted;
+    border-style: solid;
+    background-color: rgba(0, 0, 0, .05);
+  }
+
+  .pictures {
+    display: inline-block;
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &.ng-invalid-uploading .click-to-upload-image:before {
+    // TODO: Make this use the built in fa-spin class
+    content: "\f110";
+    -webkit-animation: fa-spin-image-load 2s infinite linear;
+    animation: fa-spin-image-load 2s infinite linear;
+  }
+}
+
+/**
+ * A class that can be applied to divs that indicate that something is
+ * still loading.
+ */
+
+.loading-content {
+  @include grey-inset();
+  text-align: center;
+  padding: 2rem;
+  color: rgb(187, 187, 187);
+  margin-bottom: 1rem;
+}

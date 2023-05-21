@@ -1,0 +1,61 @@
+<h4 class="action-name" ng-bind="action.name"></h4>
+<div class="empty-details" ng-if="action.new">This is a new action - be sure to save your stage first!</div>
+  <div class="management-actions" ng-show="editingStage">
+    <a class="button tiny primary edit-link"
+      ng-click="saveStageChanges(stage)">
+      <i class="fa fa-trash"></i> Save Stage
+    </a>
+    <a class="button tiny secondary edit-link"
+      ng-click="deleteStageAction(index)">
+      <i class="fa fa-trash"></i> Delete Stage Action
+    </a>
+  </div>
+  <span ng-repeat="picture in action.pictures"
+    ng-hide="editingStage">
+    <a of-lightbox-modal thumbnail-url="{{picture.medium_url}}"
+      display-url="{{picture.image_url}}" description="$parent.name">
+    </a>
+  </span>
+  <of-images-upload
+    ng-show="editingStage"
+    class="columns small-8 medium-8"
+    item="action"
+    images-key="'pictures'"
+    item-type="'action'">
+  </of-images-upload>
+  <div class="row" ng-hide="editingStage">
+    <p class="action-description columns small-8"
+      ng-bind="action.overview">
+    </p>
+    <p class="action-description columns empty-details"
+      ng-if="!action.overview">
+      The author of this guide hasn't added any details to this step.
+    </p>
+    <p ng-show="action.time">
+      This stage takes <span ng-bind="action.time"></span> <span ng-bind="action.time_unit">.
+    </p>
+  </div>
+  <div class="row" ng-show="editingStage">
+    <div class="columns small-6">
+      <textarea
+        ng-model="action.overview">
+      </textarea>
+    </div>
+    <div class="columns small-6">
+      <label class="left"
+          for="how_long">How long does this stage take?<br/>
+        <small>Don't sweat about it!</small>
+      </label>
+      <div class="vertical-input-select-group">
+        <input ng-model="action.time"
+               type="number"/>
+        <select ng-model="action.time_unit">
+          <option value="minutes">Minutes</option>
+          <option value="hours">Hours</option>
+          <option value="days">Days</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

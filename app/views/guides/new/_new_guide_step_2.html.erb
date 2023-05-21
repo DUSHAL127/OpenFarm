@@ -1,0 +1,57 @@
+<section name="step-2"
+  class="step"
+  ng-show="step === 2"
+  ng-class="{'from-right': step < 2, 'from-left': step > 2}">
+    <form class="life-stages">
+      <div class="instructions text-center">
+        <h2><%= t('.choose_the_life_stages') %></h2>
+        <h3>
+          <%= t('.life_stages_description') %>
+        </h3>
+      </div>
+      <div class="row">
+        <div class="all-stages-wrapper">
+
+          <div class="columns large-3 medium-4 small-6 stage-wrapper large-centered medium-centered"
+               ng-repeat="stage in newGuide.stages | orderBy : order "
+               ng-class="{end: $last}"
+               ng-show="showingAllStages || stage.selected">
+               <input name="{{ stage.name }}"
+                      id="{{ stage.name }}"
+                      type="checkbox"
+                      ng-model="stage.selected"/>
+               <label class="stage-option {{ stage.name | lowercase }}" for="{{ stage.name }}">
+                 <p>{{ stage.name }}</p>
+               </label>
+          </div>
+        </div>
+        <div class="more-stages-toggle">
+          <a ng-click="showingAllStages = !showingAllStages">Show <span ng-if="showingAllStages">less</span><span ng-if="!showingAllStages">more</span> stage options</a>
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="timeline-box large-12 columns large-centered"
+             create-timeline="newGuide.time_span"
+             ng-if="newGuide.time_span"
+             >
+        </div> -->
+      </div>
+      <div class="button-wrapper row">
+        <div class="columns small-12">
+          <p class="right">
+            You've selected <strong><span ng-bind="newGuide.selectedStagesCount"></span> stages</strong>.
+          </p>
+        </div>
+        <div class="columns small-12">
+          <div stage-buttons
+              cancel-url="<%= root_path %>"
+              cancel-text="<%= t('guides.new.cancel_and_go_to_home') %>"
+              back-text="<%= t('guides.new.back') %>"
+              abled-text="<%= t('.next_stage_details') %>"
+              abled-bool="newGuide.selectedStagesCount > 0"
+              disabled-text="<%= t('.choose_some_stages_to_continue') %>"
+              >
+          </div>
+        </div>
+      </div>
+  </section>

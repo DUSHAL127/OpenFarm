@@ -1,0 +1,35 @@
+.compatibility-circle {
+  width: $compatibility-circle-size;
+  height: $compatibility-circle-size;
+  border-radius: 999rem;
+  font-size: 18px;
+  font-weight: 600;
+  color: #DDD;
+  border: 2px solid #DDD;
+  line-height: $compatibility-circle-size;
+  text-align: center;
+  vertical-align: middle;
+
+  .score {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    margin-top: -8px; // nudge up
+  }
+
+  @mixin compatibility-color ($selector, $color) {
+    &.#{$selector} {
+      color: $color;
+      border-color: $color;
+
+      &.hover:hover {
+        color: white;
+        background-color: $color;
+      }
+    }
+  }
+
+  @include compatibility-color('low', $compatibility-low-color);
+  @include compatibility-color('medium', $compatibility-medium-color);
+  @include compatibility-color('high', $compatibility-high-color);
+}

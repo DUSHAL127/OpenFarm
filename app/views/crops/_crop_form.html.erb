@@ -1,0 +1,266 @@
+<div class="crop-manipulation"
+    ng-controller="cropCtrl">
+
+  <div alerts ng-model="alerts"></div>
+
+  <div class="row">
+    <div class="small-8 medium-10 small-12 small-centered columns">
+
+      <h1>
+        <% if @crop.name %>
+          Edit <%= link_to @crop.name, @crop %>
+        <% else %>
+          Add a new crop
+        <% end %>
+      </h1>
+      <p><span class="form-required">* Required</span></p>
+    </div>
+  </div>
+  <form name="cropForm">
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="crop_name">OpenFarm Crop Name <span class="form-required">*</span></label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <input data-ng-model="crop.name"
+               id="crop_name"
+               name="crop[name]"
+               type="text"
+               required/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="crop_name">Common Names</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <small>Comma Separated or New Lines</small>
+        <textarea data-ng-model="crop.common_names"
+               id="crop_common_names"
+               name="crop[common_names]"
+               type="text"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="binomial_name">Binomial Name</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <input data-ng-model="crop.binomial_name"
+               id="crop_binomial_name"
+               name="crop[binomial_name]"
+               type="text"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="taxon"><%= t('crops.edit.taxon') %></label>
+      </div>
+      <div class="columns small-8 medium-8">
+            <select ng-model="crop.taxon"
+                    id="crop_taxon"
+                    name="crop[taxon]">
+              <option value="Species"><%= t('crops.edit.species') %></option>
+              <option value="Genus"><%= t('crops.edit.genus') %></option>
+              <option value="Family"><%= t('crops.edit.family') %></option>
+              <option value="Order"><%= t('crops.edit.order') %></option>
+              <option value="Class"><%= t('crops.edit.class') %></option>
+              <option value="Phylum"><%= t('crops.edit.phylum') %></option>
+              <option value="Kingdom"><%= t('crops.edit.kingdom') %></option>
+              <option value="Domain"><%= t('crops.edit.domain') %></option>
+              <option value="Life"><%= t('crops.edit.life') %></option>
+              <option value="Other"><%= t('crops.edit.other') %></option>
+            </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="description"><%= t('crops.edit.companions') %>:</label>
+      </div>
+
+      <div class="columns small-8 medium-8 tags">
+        <ul class="companions tag-list">
+          <li ng-repeat="crop in crop.companions track by crop.slug" class="tag-item">
+            {{ crop.name }}
+            <i class="delete fa fa-times"
+              ng-click="removeCompanionCrop($index)">
+            </i>
+          </li>
+        </ul>
+        <div crop-search
+          loading-crops-text="'<%= t('crop_searches.show.loading_crops') %>'"
+          crop-on-select="addCompanionCrop"
+          required="iscompanionrequired"
+          does-not-have-button="true">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="description"><%= t('crops.edit.description') %></label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <textarea ng-model="crop.description"
+                  id="crop_description"
+                  name="crop[description]"
+                  ></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="sun_requirements">Sun Requirements</label>
+      </div>
+      <div class="columns small-8 medium-8">
+            <select ng-model="crop.sun_requirements"
+                    id="crop_sun_requirements"
+                    name="crop[sun_requirements]">
+              <option value="Full Sun"><%= t('edit.full_sun') %></option>
+              <option value="Partial Sun"><%= t('edit.partial_sun') %></option>
+              <option value="Full Shade"><%= t('edit.full_shade') %></option>
+            </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="crop_growing_degree_days">Growing Degree Days</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <input data-ng-model="crop.growing_degree_days"
+               id="crop_growing_degree_days"
+               name="crop[growing_degree_days]"
+               type="number"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="sowing_method">Sowing Method</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <input data-ng-model="crop.sowing_method"
+               id="crop_sowing_method"
+               name="crop[sowing_method]"
+               type="text"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="spread">Spread (diameter)</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <div class="row collapse">
+          <div class="columns small-10">
+            <input data-ng-model="crop.spread"
+                   id="crop_spread"
+                   name="crop[spread]"
+                  type="number"/>
+          </div>
+          <div class="columns small-2">
+            <span class="postfix">cm</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="row_spacing">Row Spacing</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <div class="row collapse">
+          <div class="columns small-10">
+            <input data-ng-model="crop.row_spacing"
+                   id="crop_row_spacing"
+                   name="crop[row_spacing]"
+                   type="number"/>
+          </div>
+          <div class="columns small-2">
+            <span class="postfix">cm</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label class="right" for="height">Height</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <div class="row collapse">
+          <div class="columns small-10">
+            <input data-ng-model="crop.height"
+                   id="crop_height"
+                   name="crop[height]"
+                   type="number"/>
+          </div>
+          <div class="columns small-2">
+            <span class="postfix">cm</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label for="crop[images]" class="right">Manage images</label>
+      </div>
+      <of-images-upload
+        class="columns small-8 medium-8"
+        item="crop"
+        images-key="'pictures'"
+        item-type="'crop'">
+      </of-images-upload>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label for="crop[icon]" class="right">Manage icon</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <div class="crop-icon-wrapper">
+          <%= image_tag crop_path(@crop, format: :svg), alt: @crop.name %>
+        </div>
+        <svg-button on-change="addSvg($svg)">
+        </svg-button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-4 medium-4">
+        <label for="crop[tags]" class="right">Keywords</label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <tags-input
+          ng-model="crop.tags_array"
+          class="keywords"
+          name="crop[tags]">
+          <auto-complete source="loadTags($query)"></auto-complete>
+        </tags-input>
+      </div>
+    </div>
+
+    <div class="row form-buttons">
+      <div class="columns small-12 medium-12">
+        <span class="right">
+          <i ng-if="crop.sending"
+            class="fa fa-spinner fa-spin loading-button"></i>
+          <input class="button small"
+            type="submit"
+            name="commit"
+            value="<%= t('crops.edit.save_crop') %>"
+            data-disable-with="Saving..."
+            ng-disabled="crop.sending || cropForm.$invalid"
+            ng-click="submitForm()"/>
+        </span>
+      </div>
+    </div>
+  </form>
+</div>

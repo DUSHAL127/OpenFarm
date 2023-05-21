@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9" lang="en"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en"
+  ng-app="openFarmApp"
+  itemscope itemtype="http://schema.org/Article"
+  xmlns:fb="http://ogp.me/ns/fb#">
+<!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+
+  <%= render 'meta/global' %>
+  <%= render 'meta/page' %>
+  <%= render 'meta/social_network' %>
+
+    <!-- Uncomment to make IE8 render like IE7 -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
+
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=0.82, minimum-scale=0.10, maximum-scale=10.0, user-scalable=yes" />
+
+    <title>
+        <%= t('application.site_title') %>
+        <%= content_for?(:title) ? yield(:title) : ' - ' + t('application.site_byline') %>
+    </title>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900' rel='stylesheet' type='text/css'>
+    <%#
+      Removing this since it does not work on production currrently and I need to
+      work on security upgrades.
+      <link rel="manifest" href="/manifest.json">
+    #%>
+    <%= stylesheet_link_tag "application", media: "screen, projection" %>
+    <%= stylesheet_link_tag "application-print", media: "print" %>
+    <%= csrf_meta_tags %>
+    <%# Controller specific start JS %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application" %>
+    <%= yield(:start_js) %>
+  </head>
+
+  <body>
+
+    <div class="<%= if (current_page?(root_path) or current_page?("/")) then 'home-nav' else 'fixed' end %>">
+      <nav class="top-bar" data-topbar role="navigation">
+          <ul class="title-area">
+              <li class="logo-link">
+                <%= link_to(image_tag('openfarm_logo_new_small.png', :width => '210px', :alt => 'Open Farm', :class => 'logo'), root_path) %>
+              </li>
+              <li class="toggle-topbar">
+                  <a href="#"><span>Menu</span></a>
+              </li>
+          </ul>
+
+          <section class="top-bar-section">
+
+              <!-- Right Nav Section -->
+              <ul class="right">
+                  <% if current_user %>
+                    <li class="has-dropdown show-for-medium-up">
+                        <a href="#" class="gray-to-black-link"><%= I18n.t('application.greeting', user: current_user.display_name) %></a>
+                        <ul class="dropdown">
+                          <li>
+                            <%= render 'shared/header_links.html.erb' %>
+                          </li>
+                        </ul>
+                    </li>
+                    <li class="show-for-small-only">
+                      <%= render 'shared/header_links.html.erb' %>
+                    </li>
+                  <% else %>
+                      <li class="has-form">
+                          <%= link_to( t("application.create_account"), new_user_registration_path, class: 'button gray-to-black-link', id: 'register') %>
+                      </li>
+                      <li class="divider"></li>
+                      <li class="has-form">
+                          <%= link_to( t("application.log_in"), new_user_session_path, class: 'button gray-to-black-link', id: 'login') %>
+                      </li>
+                  <% end %>
+              </ul>
+
+              <!-- Search box Section -->
+              <%# Added the reference to "/" because root_path was being redefined to have /en|nl/ whichever way I put it. %>
+              <% unless current_page?(root_path) or current_page?("/") %>
+                <div class="left header-search">
+                  <form action="<%= crop_search_via_get_path %>" method="get">
+                    <div class="row collapse postfix-round">
+                      <div class="small-8 columns">
+                        <input class="search" id="q" maxlength="120" name="q" placeholder="<%= t('home.placeholder') %>" size="120" type="text" value="<%= params[:q] %>">
+
+                      </div>
+                      <div class="small-4 columns end">
+                        <input class="small button no-shadow postfix" data-disable-with="Searching..." type="submit" value="<%= t('home.search') %>">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              <% end %>
+
+          </section>
+      </nav>
+    </div>
+
+    <% if current_page?(root_path) or current_page?("/") %>
+      <%# if we're at root, we need to create a wrapper for these to float them somewhere else %>
+      <div class="home-alert-wrapper">
+      <% Announcement.current(session[:announcement_hide_time]).each do |item| %>
+          <div data-alert class="alert-box warning radius columns large-4 small-centered">
+            <%= raw(item.message) %>
+            <%= link_to('&times;'.html_safe, 'announcements/hide', class: 'close', remote: true) %>
+          </div>
+      <% end %>
+      <%# The closing tag for this div is after the break %>
+    <% end %>
+    <% if notice %>
+        <div data-alert class="alert-box success radius columns large-4 small-centered">
+          <%= notice %>
+          <a href="#" class="close">&times;</a>
+        </div>
+    <% end %>
+    <% if flash[:warning] %>
+        <div data-alert class="alert-box warning radius columns large-4 small-centered">
+          <%= flash[:warning] %>
+          <a href="#" class="close">&times;</a>
+        </div>
+    <% end %>
+    <% if alert %>
+        <div data-alert class="alert-box alert radius columns large-4 small-centered">
+          <% if alert.is_a?(Array) %>
+            <% alert.each do |a| %>
+              <%= a %>
+            <% end %>
+          <% else %>
+            <%= alert %>
+          <% end %>
+          <a href="#" class="close">&times;</a>
+        </div>
+    <% end %>
+    <% if current_page?(root_path) or current_page?("/") %>
+      <%# if we're at root, we need to create a wrapper for these to float them somewhere else, close that wrapper %>
+      </div>
+    <% end %>
+    <div id="content">
+      <div alerts='alerts'></div>
+
+      <%= yield %>
+      <!-- Necessary for sticky footer -->
+      <div id='layout_footer'></div>
+
+    </div>
+
+    <%= render 'shared/footer' %>
+    <%# Controller specific end JS %>
+    <%= yield(:end_js) %>
+  </body>
+</html>

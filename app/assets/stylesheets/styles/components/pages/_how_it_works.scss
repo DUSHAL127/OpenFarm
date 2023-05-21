@@ -1,0 +1,204 @@
+// @import "compass/css3/flexbox";
+
+.how-it-works {
+  background-color: #dcccb3;
+  height: $hero-height-small;
+  max-width: initial;
+  overflow: hidden;
+  position: absolute;
+  // Initially position the how-it-works section above the screen
+  top: -200%;
+  transition: 0.3s top;
+  width: 100%;
+  z-index: 11;
+
+  // Keep how-it-works large enough on large screens
+  @media #{$medium-up} {
+    height: $hero-height-medium;
+  }
+
+  i.exit {
+  color: #999999;
+  font-size: 2rem;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  z-index: 3;
+  @media #{$small-only} {
+    font-size: 1.5em;
+    top: 1rem;
+    right: 1rem;
+  }
+
+    &:hover {
+      color: #333333;
+    }
+  }
+
+  h2.guide-description {
+    color: #333333;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 1rem;
+    text-shadow: none;
+    @media #{$small-only} {
+      font-size: .9em;
+      margin-top: 3rem;
+    }
+  }
+
+  .steps-text {
+    $step-circle-size: 50px;
+
+    font-weight: 600;
+    line-height: 80px;
+    margin: 2rem auto 1.5rem;
+
+    .step {
+      color: #333333;
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: $step-circle-size;
+      vertical-align: middle;
+      text-align: center;
+
+      > div {
+        display: inline-block;
+      }
+    }
+
+    .step-circle {
+      border: 2px solid #333333;
+      border-radius: 50%;
+      box-sizing: border-box;
+      color: white;
+      display: block;
+      float: left;
+      font-weight: 600;
+      font-size: 1.5rem;
+      height: $step-circle-size;
+      line-height: $step-circle-size - 5px;
+      margin-right: 15px;
+      text-align: center;
+      vertical-align: middle;
+      width: $step-circle-size;
+
+      & + p {
+        display: inline-block;
+        margin: 0;
+      }
+    }
+
+    .step-circle-1 {
+      background-color: rgba(120, 63,  4, 0.7);
+    }
+
+    .step-circle-2 {
+      background-color: rgba(191, 144, 0, 0.7);
+    }
+
+    .step-circle-3 {
+      background-color: rgba(106, 168, 79, 0.7);
+    }
+
+  }
+
+  .steps-images {
+    margin-bottom: 2rem;
+
+    .step-icon {
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: block;
+      height: 200px;
+      width: 100%;
+
+      &.step-1 {
+        background-image: url('steps/step_1.jpg');
+      }
+
+      &.step-2 {
+        background-image: url('steps/step_2.jpg');
+      }
+
+      &.step-3 {
+        background-image: url('steps/step_3.jpg');
+      }
+    }
+  }
+
+  ul.life-stage-icons {
+    $life-stage-icon-size: 116px;
+    height: $life-stage-icon-size;
+    overflow: hidden;
+    list-style: none;
+    text-align: center;
+
+    li {
+      background-image: url('stages/blue_life_stages.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 50px;
+      display: inline-block;
+      height: $life-stage-icon-size;
+      width: $life-stage-icon-size;
+
+      &.Preparation {
+        background-position: 0;
+       }
+
+      &.Sow {
+        background-position: -116px center;
+      }
+
+      &.Germination {
+        background-position: -232px center;
+      }
+
+      &.Seedling {
+        background-position: -348px center;
+      }
+
+      &.Juvenile {
+        background-position: -464px center;
+      }
+
+      &.Adult {
+        background-position: -580px center;
+      }
+
+      &.Flowering {
+        background-position: -696px center;
+      }
+
+      &.Fruit {
+        background-position: -812px center;
+      }
+
+      &.Dormant {
+        background-position: -928px center;
+      }
+    }
+  }
+}
+
+// Slide how-it-works into the view when browser is at the how-it-works anchor
+.how-it-works:target {
+  top: 0;
+  transition: 0.3s;
+
+  // Allow how-it-works to go full screen on mobile
+  @media #{$small-only} {
+    height: 100%;
+  }
+
+  // Allow hero to expand to full screen on mobile when how-it-works is open
+  + .hero {
+    @media #{$small-only} {
+      height: 100%;
+      transition: 0.3s;
+    }
+  }
+}

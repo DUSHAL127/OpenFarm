@@ -1,0 +1,63 @@
+.crop-page {
+
+  .edit-link {
+    margin: 1em;
+    bottom: 4em;
+    position: absolute;
+    right: 0;
+  }
+
+  table.crop {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+
+    td {
+      padding: 1.2em 1.8em;
+    }
+
+    tr > td:first-child {
+      width: 25%;
+      color: #717171;
+      font-weight: 600;
+      text-align: right;
+      height: 100px;
+    }
+
+    tr > td:nth-child(2) {
+      font-size: 1em;
+    }
+
+    tr:first-child{
+      td{
+        width: 100%;
+        padding: .5em;
+        text-align: left;
+      }
+      img{
+        height: 100px;
+      }
+
+      .still-uploading-crop-images {
+        display: inline-block;
+        text-align: center;
+        vertical-align: top;
+        height: 100px;
+        width: 100px;
+        border: 2px solid $light-gray;
+        border-radius: 10px;
+        color: $light-gray;
+        background-color: lighten($light-gray, 10%);
+
+        i {
+          margin-top: 25px;
+          font-size: 1.8em;
+        }
+      }
+    }
+
+    .measurement-unit {
+      color: #666666;
+    }
+  }
+}

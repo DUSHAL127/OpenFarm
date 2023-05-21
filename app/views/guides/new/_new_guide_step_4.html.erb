@@ -1,0 +1,106 @@
+<section name="step-4"
+  class="step"
+  ng-show="step === 4"
+  ng-class="{'from-right': 4 < previousStep, 'from-left': step > 4}">
+  <div class="instructions text-center">
+    <h1>
+      <%= t('.almost_done') %>
+    </h1>
+  </div>
+  <hr/>
+  <form accept-charset="UTF-8"
+    class="finishing-up"
+    id="new-guide-step-2"
+    method="post"
+    >
+    <div class="row practices">
+      <div class="columns medium-4">
+        <label class="left"
+          for="practices"><%= t('.which_practices') %><br/>
+          <small><%= t('.check_all_that_apply') %></small>
+        </label>
+      </div>
+      <div class="columns medium-8 options">
+        <div multi-row-select
+             ng-if="newGuide.practices"
+             class="multi-choice"
+             options-array="newGuide.practices"
+             multi-select-overflow-count="3"
+             multi-select-type="checkbox"
+             multi-select-id="practices">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="columns medium-4">
+        <label for="guide_name"><%= t('.what_do_you_want_to_call_your_guide') %>
+        </label>
+      </div>
+      <div class="columns medium-8">
+        <input id="guide_name" name="guide[name]"
+          type="text"
+          ng-model="newGuide.name"
+          placeholder="<%= current_user.display_name %>'s {{ newGuide.crop.name }}"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="columns medium-4">
+        <label for="location"><%= t('.where_are_you_growing_it') %></label>
+      </div>
+      <div class="columns medium-8">
+        <span ng-model="newGuide.location"
+              location
+              name="location"
+              loading-text="<%= t('application.loading_locations') %>">
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns medium-4">
+        <label class="left"
+            for="guide_image_upload"><%= t('.choose_photo') %><br/>
+          <small><%= t('application.only_upload_what_you_own') %></small>
+        </label>
+      </div>
+      <div class="columns medium-8">
+        <div id="guide_image_upload"
+            name="guide_image_upload"
+            s3-upload
+            bucket="'<%= ENV['S3_BUCKET_NAME'] %>'"
+            ng-model="s3upload"
+            s3-upload-existing-pictures="newGuide.featured_image"
+            s3-upload-place-pic="placeGuideUpload(image)"
+            s3-upload-options="{getOptionsUri: '/api/aws/s3_access_token', folder: 'temp/'}">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-4 medium-4">
+        <label for="location"><%= t('.give_an_overview') %></label>
+      </div>
+      <div class="columns large-8 medium-8">
+        <textarea ng-model="newGuide.overview">
+        </textarea>
+      </div>
+    </div>
+
+    <div class="button-wrapper row">
+      <div class="columns small-12">
+        <p class="right"><%= t('.finish_draft') %></p>
+        <div stage-buttons id="submitFormButton"
+             cancel-url="<%= root_path %>"
+             cancel-text="<%= t('guides.new.cancel_and_go_to_home') %>"
+             back-text="<%= t('guides.new.back') %>"
+             next-function="submitForm"
+             abled-bool="newGuide.name && !newGuide.sending"
+             processing="startedSending"
+             abled-text="<%= t('.done') %>"
+             disabled-text="<%= t('.call_your_guide_something') %>">
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

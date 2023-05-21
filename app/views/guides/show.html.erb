@@ -1,0 +1,147 @@
+<%= content_for(:author) do %><% if @guide.user %><%= @guide.user.display_name %><% else %> a past member <% end %><% end %>
+<%= content_for(:title) do %> - <%= @guide.name %><% end %>
+<%= content_for(:description) do %><%= @guide.overview %><% end %>
+<%= content_for(:keywords) do %><% if @guide.practices %><%= @guide.practices.join(', ') %><% end %>, <% if @guide.crop %><%= @guide.crop.name %><% end %><% end %>
+
+<%= content_for(:social_image) do%>
+  <% if @guide.pictures.first %>
+    <%= @guide.pictures.first.attachment.url %>
+  <% elsif @guide.crop && @guide.crop.pictures && @guide.crop.pictures.first %>
+    <%= @guide.crop.pictures.first.attachment.url %>
+  <% end %>
+<% end %>
+
+<% content_for(:start_js) do %>
+  <%= javascript_include_tag '//maps.google.com/maps/api/js?key=' + ENV['GOOGLE_MAPS_API_KEY'] %>
+<% end %>
+
+<div ng-controller="showGuideCtrl"
+     ng-cloak
+     class="guides show-guide"
+     ng-class="{'editing': editing}">
+
+    <div ng-if="guide.draft"
+      class="draft-banner">
+      <h2><%= t('.this_guide_is_a_draft') %></h2>
+      <% if @guide.owned_by?(current_user) %>
+      <button
+        ng-click="publish()">
+        <%= t('.publish_this_guide') %>
+      </button>
+      <p><%= t('.draft_not_in_search_results') %></p>
+      <% end %>
+    </div>
+
+    <!-- These two 'Tops of Guides' for different screen sizes are pretty similar
+    and it may be possible/worth DRYing it up. I'm not sure. I imagine that as the
+    site gets more complex, it is easier to develop fairly separated HTML in order
+    to have more freedom in rearranging elements, and an easier time styling.
+    Open to feedback! :) -->
+
+    <!-- Top of Guide for large screens -->
+    <!-- TODO: There's a lot of duplicate content here, we should try and minimize that. -->
+    <div class="row wide-row large-guide show-for-large-up">
+      <div class="large-12 columns header">
+        <h1 class="guide-name">
+          <span ng-bind="guide.name" ng-hide="editing"></span>
+          <input ng-show="editing" ng-model="guide.name"/>
+        </h1>
+
+        <h2 class="guide-relationships"><%= t('.guide_by') %> <a href="/users/{{ guide.user.id }}" ng-bind="guide.user.display_name || 'a past member'"></a> for <a href="/crops/{{ guide.crop.slug }}/" class="crop-name">{{ guide.crop.name }}</a></h2>
+        <%= render "guides/show/guide_controllers" %>
+      </div>
+
+      <div class="columns large-5">
+        <div class="canopy"
+          ng-attr-alt="{{ guide.name }}"
+          style="background-image: url({{ guide.featured_image.image_url || guide.crop.pictures[0].medium_url }})">
+        </div>
+      </div>
+
+      <div class="columns large-5 margin-top">
+        <%= render 'guides/show/show_guide_overview' %>
+      </div>
+
+      <div class="columns large-2 margin-top  compatibility">
+        <h4 class="title text-center" id="compatibility">
+          <%= t('.compatibility') %>
+        </h4>
+        <div class="compatibility-circle-container"
+          ng-repeat="garden in currentUser.gardens"
+          tooltip="<%= t('.compatibility_based_on') %> &quot;{{ garden.name }}&quot;">
+          <%= render partial:'/guides/compatibility_circle', locals:{guide: @guide} %>
+        </div>
+
+        <div class="add-to-garden center">
+          <% if current_user && current_user.confirmed? %>
+            <div add-to-gardens
+              crop-object="guide"
+              object-type="'guide'"
+              user="currentUser">
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Top of Guide for small screens -->
+    <!-- TODO: There's a lot of duplicate content here, we should try and minimize that. -->
+    <div class="row wide-row small-guide show-for-medium-down">
+      <div class="canopy"
+        ng-attr-alt="{{ guide.name }}"
+        style="background-image: url({{ guide.featured_image.medium_url || guide.crop.pictures[0].medium_url }})">
+        <div class="large-12 columns">
+          <h1 class="guide-name"><span ng-bind="guide.name" ng-hide="editing"></span>
+          <input ng-show="editing" ng-model="guide.name"/></h1>
+        </div>
+          <%= render "guides/show/guide_controllers" %>
+      </div>
+
+      <div class="columns small-12 margin-top">
+        <%= render 'guides/show/show_guide_overview' %>
+      </div>
+
+      <div class="columns small-12 margin-top compatibility" ng-class="{'editing': editing}">
+        <h4 class="title text-center" id="compatibility">
+          <%= t('.compatibility') %>
+        </h4>
+
+        <div class="compatibility-circle-container"
+          ng-repeat="garden in currentUser.gardens"
+          tooltip="<%= t('.compatibility_based_on') %> &quot;{{ garden.name }}&quot;">
+          <%= render partial:'/guides/compatibility_circle', locals:{guide: @guide} %>
+        </div>
+
+        <div class="add-to-garden center">
+          <% if current_user %>
+            <div add-to-gardens
+              crop-object="guide"
+              object-type="'guide'"
+              user="currentUser">
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row wide-row content">
+    <div class="small-12 columns">
+    <accordion close-others="false">
+
+    <%= render 'guides/show/show_guide_basic_needs' %>
+
+    <!-- <%= render 'guides/show/show_guide_timeline' %> -->
+
+    <%= render 'guides/show/show_guide_stages' %>
+
+    <%#= render 'guides/show/show_guide_statistics' %>
+
+    </div>
+  </div>
+</div>
+
+<% content_for(:end_js) do %>
+  <%= javascript_tag "var USER_ID = '#{current_user ? current_user.id : nil}';" %>
+  <%= javascript_include_tag 'guides/show' %>
+<% end %>

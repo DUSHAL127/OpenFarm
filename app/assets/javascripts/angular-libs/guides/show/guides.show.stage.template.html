@@ -1,0 +1,138 @@
+<div class="row stage">
+  <div class="management-actions" ng-if="canEdit">
+
+    <a ng-hide="editingStage"
+      class="button tiny secondary edit-link"
+      ng-click="toggleEditingStage()">
+      <i class="fa fa-edit"></i> Edit Stage
+    </a>
+    <a ng-hide="editingStage"
+      class="button tiny secondary edit-link"
+      ng-click="deleteStage(stage)">
+      <i class="fa fa-trash"></i> Delete Stage
+    </a>
+    <a ng-show="editingStage"
+      class="button tiny primary edit-link"
+      ng-click="saveStageChanges(stage)">
+      <i class="fa fa-save"></i> Save Changes To Stage
+    </a>
+  </div>
+
+  <div class="columns images small-3"
+    ng-class="{ 'small-3': !stage.pictures || stage.pictures.length <= 1 }">
+    <span ng-repeat="pic in stage.pictures"
+      ng-if="!editingStage">
+      <a of-lightbox-modal thumbnail-url="{{pic.medium_url}}"
+        display-url="{{pic.image_url}}" description="{{$parent.name}}">
+      </a>
+    </span>
+
+    <span ng-if="!stage.pictures || stage.pictures.length === 0"
+      class="stage-default-picture stage-option {{ stage.name | lowercase }}">
+    </span>
+
+    <of-images-upload
+      ng-show="editingStage"
+      class="upload-stage-picture"
+      item="stage"
+      images-key="'pictures'"
+      item-type="'stage'">
+    </of-images-upload>
+  </div>
+
+  <div class="columns small-8 action-content end"
+    ng-class="{ 'small-12': stage.pictures.length > 1 }">
+    <h4 class="stage-name">{{ stage.name }} Overview</h4>
+
+    <div class="row" ng-hide="editingStage">
+      <div class="markdown columns small-8"
+        markdown="stage.overview"
+        ng-if="stage.overview"
+        >
+      </div>
+      <div ng-hide="stage.overview"
+        class="columns small-8 empty-details">
+        <p>No stage overview given</p>
+      </div>
+    </div>
+    <div class="row"
+      ng-show="editingStage">
+      <div class="columns small-12">
+        <label for="textarea">Describe what you did during this stage</label>
+        <textarea
+          id="textarea"
+          class="columns small-6"
+          ng-model="stage.overview"
+          ng-show="editingStage">
+        </textarea>
+      </div>
+    </div>
+
+    <table ng-hide="editingStage">
+      <tr>
+        <th>Environment</th><td>
+          <span of-environmental-overview="environment"></span>
+        </td>
+      </tr>
+      <tr>
+        <th>Light</th><td>
+          <span of-environmental-overview="light"></span>
+        </td>
+      </tr>
+      <tr>
+        <th>Soil</th><td><span of-environmental-overview="soil"></span></td>
+      </tr>
+    </table>
+
+    <div ng-show="editingStage" class="editing-stage-environment">
+
+      <label>Environment</label>
+      <div multi-row-select
+           class="multi-choice"
+           relative-id="'stage' + stage.id"
+           options-array="environment"
+           multi-select-overflow-count="3"
+           multi-select-type="checkbox"
+           multi-select-id="environment">
+      </div>
+
+      <label>Light</label>
+      <div multi-row-select
+           class="multi-choice"
+           relative-id="'stage' + stage.id"
+           options-array="light"
+           multi-select-overflow-count="3"
+           multi-select-type="checkbox"
+           multi-select-id="light">
+      </div>
+
+      <label>Soil</label>
+      <div multi-row-select
+           class="multi-choice"
+           relative-id="'stage' + stage.id"
+           options-array="soil"
+           multi-select-overflow-count="3"
+           multi-select-type="checkbox"
+           multi-select-id="soil">
+      </div>
+    </div>
+  </div>
+  <div class="columns small-12 action-content"
+    ng-class="{end: $last, new: action.new}"
+    ng-repeat="action in stage.stage_actions | orderBy: 'order'"
+    of-show-stage-action="action"
+    editing-stage="editingStage"
+    stage="stage"
+    s3-bucket="s3Bucket"
+    ng-hide="action.hide"
+    save-stage-changes="saveStageChanges"
+    index="$index">
+  </div>
+
+  <div class="columns small-12 add-action" ng-show="editingStage">
+    Want to add an action to this stage?<br/>
+    <button ng-click="openAddActionModal(stage)"
+      class="button primary"> Add Action
+    </button>
+  </div>
+</div>

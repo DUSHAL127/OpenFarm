@@ -1,0 +1,45 @@
+.infos {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+
+  .image {
+    height: 80px;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+  }
+
+  p {
+    width: 80%;
+    line-height: 1.2;
+    color: $of-dark;
+    margin: 0 auto;
+  }
+}
+
+input + small {
+  top: -1rem;
+  position: relative;
+}
+
+.sign-in {
+  margin-bottom: 4rem;
+}
+
+.button-wrapper {
+  text-align: center;
+}
+
+.sign-up {
+  margin-top: 1rem;
+  text-align: right;
+}

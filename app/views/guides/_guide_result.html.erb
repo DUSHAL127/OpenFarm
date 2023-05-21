@@ -1,0 +1,16 @@
+<%= link_to guide do %>
+  <li class="search-result-guide compatibility-<%= guide.compatibility_label(current_user) %>">
+    <div class="guide-info">
+      <div class="guide-name-and-author">
+        <h3 class="guide-name"><%= guide.name %></h3>
+        <p class="guide-author">by <% if guide.user %><%= guide.user.display_name %><% else %>a past member<% end %></p>
+      </div>
+      <div class="guide-description">
+        <p><%= truncate(guide.overview, length: 160)%></p>
+      </div>
+    </div>
+    <div class="compatibility-circle-container">
+      <%= render partial:'/guides/compatibility_circle', locals:{guide: guide} %>
+    </div>
+  </li>
+<% end %>
